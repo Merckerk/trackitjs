@@ -48,7 +48,7 @@ const ExpenseList = ({ expenses, onDelete }) => {
                   <button color="primary" onClick={() => {}}>
                     Edit
                   </button>
-                  <button color="primary" onClick={() => {}}>
+                  <button color="primary" onClick={() => {onDelete(row.id)}}>
                     Delete
                   </button>
                 </StyledTableCellWithButtons>

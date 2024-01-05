@@ -53,7 +53,7 @@ const ExpenseCrudForm = ({
 
         <ReusableInput
           label="Date Due or paid"
-          type="Date"
+          type="date"
           id="dateDueOrPaid"
           name="dateDueOrPaid"
           placeholder="Enter Date"

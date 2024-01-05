@@ -9,25 +9,24 @@ export const POST = async (req, res) => {
     const { username, email, password } = reqBody;
 
     const userNameCheck = await User.findOne({ username });
+    const emailCheck = await User.findOne({ email });
 
     if (userNameCheck) {
       return new Response("Username already exists.", { status: 400 });
+    }
+    if (emailCheck) {
+      return new Response("Email already exists.", { status: 400 });
     }
 
     //hash password
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
-    //create user
-    // const newUser = new User({
-    //   username,
-    //   password: hashedPassword,
-    // });
-
     await User.create({
       username,
       email,
       password: hashedPassword,
+      expenses: [],
     });
 
     return new Response("Successfully created an account.", { status: 201 });

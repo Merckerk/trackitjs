@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 
 const CreateExpense = () => {
   const { data: session } = useSession();
-  const userId = session?.user?.username;
+  const userId = session?.user?.id;
   const [post, setPost] = useState({
     name: "",
     amount: 0,
@@ -18,7 +18,24 @@ const CreateExpense = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {console.log(post)}, [post]);
-  useEffect(() => {console.log(session)}, [userId]);
+  useEffect(() => {console.log("seshid:",userId)}, [userId]);
+
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await axios.patch(`api/addexpense`, {
+        userId: userId,
+        expense: post,
+      })
+
+      console.log("response: ", response.data);
+    } catch (error) {
+      console.error("Error saving changes:", error)
+    }finally{
+      setIsLoading(false);
+    }
+  }
 
   return (
     <ExpenseCrudForm
@@ -26,7 +43,7 @@ const CreateExpense = () => {
       post={post}
       setPost={setPost}
       loading={isLoading}
-      handleSubmit={() => {}}
+      handleSubmit={handleSubmit}
     />
   );
 };

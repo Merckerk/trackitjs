@@ -1,7 +1,12 @@
 import mongoose, { Schema, model, models } from "mongoose";
 
+const expenseSchema = new Schema({
+  name: String,
+  amount: Number,
+  dateDueOrPayed: String,
+});
+
 const userSchema = new Schema({
-  //will be stored in an admin table
   username: {
     type: String,
     required: [true, "Please provide a username"],
@@ -16,7 +21,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Please provide a password"],
   },
-  // expenses: [expenseSchema],
+  expenses: [expenseSchema],
 });
 
 const User = models.users || model("users", userSchema);

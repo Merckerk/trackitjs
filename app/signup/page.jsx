@@ -28,7 +28,7 @@ const SignUp = () => {
       }
 
       const payloadValues = { username, password };
-      const response = await axios.post("api/auth/users/signUp", payloadValues);
+      const response = await axios.post("api/signup", payloadValues);
       toast.success("Successfully created a user.");
       router.push("/login");
     } catch (error) {

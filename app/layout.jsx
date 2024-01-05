@@ -1,4 +1,5 @@
 import "@styles/globals.css";
+import Provider from "../components/provider";
 
 export const metadata = {
   title: "TrackIt",
@@ -9,11 +10,13 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <div className="main">
-          <div className="gradient" />
-        </div>
+        <Provider>
+          <div className="main">
+            <div className="gradient" />
+          </div>
 
-        <main className="app">{children}</main>
+          <main className="app">{children}</main>
+        </Provider>
       </body>
     </html>
   );

@@ -26,7 +26,9 @@ const ExpenseCrudForm = ({
           name="name"
           placeholder="Enter Expense Name"
           className="form_input"
-          onChange={() => {}}
+          onChange={(e) => {
+            setPost({ ...post, name: e.target.value });
+          }}
           value={post?.name}
           required
         />
@@ -40,7 +42,9 @@ const ExpenseCrudForm = ({
           name="amount"
           placeholder="Enter expense amount"
           className="form_input"
-          onChange={() => {}}
+          onChange={(e) => {
+            setPost({ ...post, amount: e.target.value });
+          }}
           value={post?.amount}
           required
         />
@@ -54,8 +58,10 @@ const ExpenseCrudForm = ({
           name="dateDueOrPaid"
           placeholder="Enter Date"
           className="form_input"
-          onChange={() => {}}
-          value=""
+          onChange={(e) => {
+            setPost({ ...post, date: e.target.value });
+          }}
+          value={post?.date}
           errorMessage=""
           required
         />

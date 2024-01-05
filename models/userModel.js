@@ -7,10 +7,16 @@ const userSchema = new Schema({
     required: [true, "Please provide a username"],
     unique: true,
   },
+  email: {
+    type: String,
+    required: [true, "Please provide an email"],
+    unique: [true, "Must be unique"],
+  },
   password: {
     type: String,
     required: [true, "Please provide a password"],
   },
+  // expenses: [expenseSchema],
 });
 
 const User = models.users || model("users", userSchema);

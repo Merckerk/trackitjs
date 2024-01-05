@@ -9,6 +9,7 @@ const SignUp = () => {
   const router = useRouter();
   const [payload, setPayload] = useState({
     username: "",
+    email:"",
     password: "",
     repassword: "",
   });
@@ -18,7 +19,7 @@ const SignUp = () => {
   const onCreateUser = async () => {
     try {
       setIsLoading(true);
-      const { username, password, repassword } = payload;
+      const { username, email, password, repassword } = payload;
 
       if (password !== repassword) {
         toast.error("Passwords do not match. Please try again.");
@@ -27,7 +28,7 @@ const SignUp = () => {
         );
       }
 
-      const payloadValues = { username, password };
+      const payloadValues = { username, email, password };
       const response = await axios.post("api/signup", payloadValues);
       toast.success("Successfully created a user.");
       router.push("/login");

@@ -6,7 +6,7 @@ export const POST = async (req, res) => {
   try {
     await connectToDB();
     const reqBody = await req.json();
-    const { username, password } = reqBody;
+    const { username, email, password } = reqBody;
 
     const userNameCheck = await User.findOne({ username });
 
@@ -19,12 +19,16 @@ export const POST = async (req, res) => {
     const hashedPassword = await bcryptjs.hash(password, salt);
 
     //create user
-    const newUser = new User({
+    // const newUser = new User({
+    //   username,
+    //   password: hashedPassword,
+    // });
+
+    await User.create({
       username,
+      email,
       password: hashedPassword,
     });
-
-    const savedUser = await newUser.save();
 
     return new Response("Successfully created an account.", { status: 201 });
   } catch (error) {

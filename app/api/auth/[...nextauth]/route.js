@@ -28,17 +28,16 @@ const authOptions = {
 
           console.log("Password comparison result:", validPassword);
 
+          console.log(process.env.NEXTAUTH_SECRET);
           if (!validPassword) {
             console.log("Invalid password");
             return null;
           } else {
             console.log("Valid password");
+            console.log("user to return:", user);
+            return user.username;
           }
 
-          const userWithoutImage = { ...user.toObject() };
-          delete userWithoutImage.image;
-
-          return userWithoutImage;
         } catch (error) {
           console.error("Error during authorization:", error);
           return null;

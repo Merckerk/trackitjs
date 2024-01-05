@@ -11,7 +11,8 @@ const CreateExpense = () => {
   const [post, setPost] = useState({
     name: "",
     amount: 0,
-    date: new Date().toISOString(),
+    dateDueOrPayed: "",
+    // date: new Date().toISOString(),
   });
 
   const [isLoading, setIsLoading] = useState(false);

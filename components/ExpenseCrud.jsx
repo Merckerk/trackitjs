@@ -59,7 +59,7 @@ const ExpenseCrudForm = ({
           placeholder="Enter Date"
           className="form_input"
           onChange={(e) => {
-            setPost({ ...post, date: e.target.value });
+            setPost({ ...post, dateDueOrPayed: e.target.value });
           }}
           value={post?.date}
           errorMessage=""

@@ -7,6 +7,8 @@ import ReusableInput from "@components/ReusableInput";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 
+import axios from "axios";
+
 const Track = () => {
   const { data: session } = useSession();
   const [allExpenses, setAllExpenses] = useState([]);
@@ -42,18 +44,19 @@ const Track = () => {
   }
 
   const handleDelete = async (expenseId) => {
+    console.log("expenseid from handle delete",expenseId)
     try {
       setIsLoading(true);
 
-      const response = await axios.patch(`api/deleteexpense`, {
-        userId: session?.user?.id,
+      const response = await axios.patch(`api/deleteUserExpense/${session?.user?.id}`, {
         expenseId: expenseId,
       })
-
+      
       console.log("response: ", response.data);
+      loadUserExpenses();
       
     } catch (error) {
-      
+      console.log(error);
     }finally{
       setIsLoading(false);
     }
@@ -87,7 +90,7 @@ const Track = () => {
             </button>
           </div>
         </div>
-        <ExpenseList expenses={expensesToLoad} onDelete={() => {}} />
+        <ExpenseList expenses={expensesToLoad} onDelete={handleDelete} />
       </div>
     </div>
   );

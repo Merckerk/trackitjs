@@ -5,9 +5,11 @@ import axios from "axios";
 import ExpenseCrudForm from "@components/ExpenseCrud";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const CreateExpense = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   const [post, setPost] = useState({
     name: "",
     amount: 0,
@@ -28,7 +30,10 @@ const CreateExpense = () => {
         expense: { ...post },
       });
   
-      console.log("response: ", response.data);
+      console.log("response: ", response);
+      if (response.status === 200) {
+        setTimeout(() => router.push("/track"), 500);
+      }
     } catch (error) {
       console.error("Error saving changes:", error);
     } finally {

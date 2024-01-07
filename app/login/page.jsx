@@ -27,7 +27,7 @@ const Login = () => {
         setError("Invalid Credentials");
         return;
       }
-      router.replace("/");
+      router.replace("/track");
     } catch (error) {
       console.log(error);
     }

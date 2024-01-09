@@ -2,12 +2,16 @@ import { connectToDB } from "@utils/database";
 import User from "@models/userModel";
 
 export const PATCH = async (req, { params, query }) => {
-  const expenseId = query.get("expenseId");
-  const { updatedExpense } = await req.json();
+  // const expenseId = query.get("expenseId");
+  // const { updatedExpense } = await req.json();
 
   try {
+    console.log("req", req.query);
+    // const queryParams = new URLSearchParams(req.url.split("?")[1]); // Extract query parameters
+    // const expenseId = queryParams.get("expenseId");
+
     await connectToDB();
-    console.log("expense Id:", expenseId);
+    // console.log("expense Id:", expenseId);
 
     const existingUser = await User.findById(params.id);
 
@@ -17,17 +21,17 @@ export const PATCH = async (req, { params, query }) => {
 
     console.log("user", existingUser);
 
-    const expenseToUpdate = existingUser.expenses.find(
-      (expense) => expense._id.toString() === expenseId
-    );
+    // const expenseToUpdate = existingUser.expenses.find(
+    //   (expense) => expense._id.toString() === expenseId
+    // );
 
-    if (!expenseToUpdate) {
-      return new Response("Expense not found", { status: 404 });
-    }
+    // if (!expenseToUpdate) {
+    //   return new Response("Expense not found", { status: 404 });
+    // }
 
-    Object.assign(expenseToUpdate, updatedExpense);
+    // Object.assign(expenseToUpdate, updatedExpense);
 
-    await existingUser.save();
+    // await existingUser.save();
 
     return new Response(JSON.stringify(existingUser), { status: 200 });
   } catch (error) {

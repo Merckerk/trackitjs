@@ -23,6 +23,9 @@ const EditExpense = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [areFieldsValid, setAreFieldsValid] = useState(false);
 
+
+
+  
   const editExpense = async () => {
     try {
       const { name, amount, dateDueOrPayed } = post;
@@ -41,6 +44,9 @@ const EditExpense = () => {
       // toast.error("Error updating expense");
     }
   };
+
+
+
 
 
   const getExpenseDetails = async () => {

@@ -3,20 +3,25 @@ import User from "@models/userModel";
 
 export const GET = async (req, { query, params }) => {
   try {
-    const queryParams = new URLSearchParams(req.url.split("?")[1]); // Extract query parameters
-    const expenseId = queryParams.get("expenseId");
+    // console.log("herehrerherherhehreh");
+    // console.log("req.query", req.query);
+    // console.log("end here");
 
+    const queryParams = new URLSearchParams(req.url.split('?')[1]); // Extract query parameters
+    const expenseId = queryParams.get('expenseId');
 
+    // console.log("expense",expenseId);
+    // console.log("end here");
+    
     await connectToDB();
 
     const user = await User.findById(params.id);
     if (!user) return new Response("User Not Found.", { status: 404 });
 
-    const expense = user.expenses.find(
-      (expense) => expense._id.toString() === expenseId
-    );
+    const expense = user.expenses.find((expense) => expense._id.toString() === expenseId);
     if (!expense) return new Response("Expense Not Found.", { status: 404 });
 
+    
     // const returnData = {
     //   user: user,
     //   expenses: user.expenses,

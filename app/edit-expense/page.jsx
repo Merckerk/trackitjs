@@ -25,25 +25,44 @@ const EditExpense = () => {
 
 
 
-  
+
+  // const editExpense = async () => {
+  //   try {
+  //     const { name, amount, dateDueOrPayed } = post;
+  //     const postValues = { name, amount, dateDueOrPayed };
+  //     const response = await axios.patch(
+  //       `api/editUserExpense/${session?.user?.id}?expenseId=${expenseId}`,
+  //       {
+  //         data: {
+  //           updatedExpense: postValues,
+  //         },
+  //       }
+  //     );
+  //     console.log("response:", response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //     // toast.error("Error updating expense");
+  //   }
+  // };
+
   const editExpense = async () => {
+    const {name, amount, dateDueOrPayed} = post;
+    const postValues = {name, amount, dateDueOrPayed};
     try {
-      const { name, amount, dateDueOrPayed } = post;
-      const postValues = { name, amount, dateDueOrPayed };
-      const response = await axios.patch(
-        `api/editUserExpense/${session?.user?.id}?expenseId=${expenseId}`,
-        {
-          data: {
-            updatedExpense: postValues,
-          },
-        }
-      );
-      console.log("response:", response.data);
+      const response = await axios.patch(`api/editexpensetwo`, {
+        userId: session?.user?.id,
+        expenseId: expenseId,
+        updatedExpense: postValues,
+      });
+
+      console.log("response: ", response)
+      if (response.status === 200) {
+        setTimeout(() => router.push("/track"), 500);
+      }
     } catch (error) {
-      console.error(error);
-      // toast.error("Error updating expense");
+      console.error("Error saving changes:", error)
     }
-  };
+  }
 
 
 

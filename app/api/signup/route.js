@@ -6,25 +6,28 @@ export const POST = async (req, res) => {
   try {
     await connectToDB();
     const reqBody = await req.json();
-    const { username, password } = reqBody;
+    const { username, email, password } = reqBody;
 
     const userNameCheck = await User.findOne({ username });
+    const emailCheck = await User.findOne({ email });
 
     if (userNameCheck) {
       return new Response("Username already exists.", { status: 400 });
+    }
+    if (emailCheck) {
+      return new Response("Email already exists.", { status: 400 });
     }
 
     //hash password
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
-    //create user
-    const newUser = new User({
+    await User.create({
       username,
+      email,
       password: hashedPassword,
+      expenses: [],
     });
-
-    const savedUser = await newUser.save();
 
     return new Response("Successfully created an account.", { status: 201 });
   } catch (error) {

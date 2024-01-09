@@ -28,26 +28,42 @@ const authOptions = {
 
           console.log("Password comparison result:", validPassword);
 
+          console.log(process.env.NEXTAUTH_SECRET);
           if (!validPassword) {
             console.log("Invalid password");
             return null;
           } else {
             console.log("Valid password");
+            console.log("user to return:", user);
+            return user;
           }
-
-          return user;
-
-          // const userWithoutImage = { ...user.toObject() };
-          // delete userWithoutImage.image;
-
-          // return userWithoutImage;
         } catch (error) {
           console.error("Error during authorization:", error);
-          return null;
+          throw new Error("Failed to login");
         }
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.username = user.username;
+        token.email = user.email;
+        token.id = user.id;
+      }
+      console.log("token:", token);
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.username = token.username;
+        session.user.email = token.email;
+        session.user.id = token.id;
+      }
+      console.log("sesh:", session);
+      return session;
+    },
+  },
 
   session: {
     strategy: "jwt",

@@ -14,6 +14,7 @@ const EditExpense = () => {
   const expenseId = searchParams.get("expenseid");
 
   const [post, setPost] = useState({
+    expenseIdFromParams: "",
     name: "",
     amount: 0,
     dateDueOrPayed: "",
@@ -23,30 +24,46 @@ const EditExpense = () => {
   const [areFieldsValid, setAreFieldsValid] = useState(false);
 
   const editExpense = async () => {
-    const response = await axios.put(
-      `api/editUserExpense/${session?.user?.id}`,
-      {
-        expenseId: expenseId,
-      }
-    );
-    const data = await response.json();
+    try {
+      const response = await axios.patch(
+        `api/editUserExpense/${session?.user?.id}`,
+        {
+          expenseId: expenseId,
+          // updatedExpense: { ...post }
+        }
+      );
+      console.log("response:", response.data);
+    } catch (error) {
+      console.error(error);
+      toast.error("Error updating expense");
+    }
   };
 
   const getExpenseDetails = async () => {
     try {
       console.log("user to find:", session?.user?.id);
       console.log("expense to find:", expenseId);
+
+      const { name, amount, dateDueOrPayed} = post;
+      const updatedExpense = {name, amount, dateDueOrPayed};
       const response = await axios.get(
         `/api/getUserExpense/${session?.user?.id}`,
         {
           params: {
             expenseId: expenseId,
+            updatedExpense: updatedExpense
           }
         }
       );
       const data = response.data;
 
-      console.log("expense data:", data);
+      setPost({
+        expenseIdFromParams: expenseId,
+        name: data.name,
+        amount: data.amount,
+        dateDueOrPayed: data.dateDueOrPayed,
+      });
+
     } catch (error) {
       console.error("Error fetching expense details:", error);
     }
@@ -54,7 +71,11 @@ const EditExpense = () => {
 
   useEffect(() => {
     getExpenseDetails();
-  }, [session?.user?.id]);
+  }, []);
+
+  useEffect(() => {
+    console.log("post values:",post);
+  }, [post]);
 
   return (
     <ExpenseCrudForm
@@ -62,7 +83,7 @@ const EditExpense = () => {
       post={post}
       setPost={setPost}
       loading={isLoading}
-      handleSubmit={() => {}}
+      handleSubmit={editExpense}
     />
   );
 };

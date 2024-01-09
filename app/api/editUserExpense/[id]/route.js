@@ -1,16 +1,21 @@
 import { connectToDB } from "@utils/database";
 import User from "@models/userModel";
 
-export const PUT = async (req, { params }) => {
-  const { expenseId, updatedExpense } = await req.json();
+export const PATCH = async (req, { params, query }) => {
+  const expenseId = query.get("expenseId");
+  const { updatedExpense } = await req.json();
 
   try {
     await connectToDB();
+    console.log("expense Id:", expenseId);
+
     const existingUser = await User.findById(params.id);
 
     if (!existingUser) {
       return new Response("User not found", { status: 404 });
     }
+
+    console.log("user", existingUser);
 
     const expenseToUpdate = existingUser.expenses.find(
       (expense) => expense._id.toString() === expenseId
@@ -30,5 +35,3 @@ export const PUT = async (req, { params }) => {
     return new Response("Failed to update expense", { status: 500 });
   }
 };
-
-

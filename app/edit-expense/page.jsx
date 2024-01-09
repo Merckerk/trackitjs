@@ -25,34 +25,38 @@ const EditExpense = () => {
 
   const editExpense = async () => {
     try {
+      const { name, amount, dateDueOrPayed } = post;
+      const postValues = { name, amount, dateDueOrPayed };
       const response = await axios.patch(
-        `api/editUserExpense/${session?.user?.id}`,
+        `api/editUserExpense/${session?.user?.id}?expenseId=${expenseId}`,
         {
-          expenseId: expenseId,
-          // updatedExpense: { ...post }
+          data: {
+            updatedExpense: postValues,
+          },
         }
       );
       console.log("response:", response.data);
     } catch (error) {
       console.error(error);
-      toast.error("Error updating expense");
+      // toast.error("Error updating expense");
     }
   };
+
 
   const getExpenseDetails = async () => {
     try {
       console.log("user to find:", session?.user?.id);
       console.log("expense to find:", expenseId);
 
-      const { name, amount, dateDueOrPayed} = post;
-      const updatedExpense = {name, amount, dateDueOrPayed};
+      // const { name, amount, dateDueOrPayed } = post;
+      // const updatedExpense = { name, amount, dateDueOrPayed };
       const response = await axios.get(
         `/api/getUserExpense/${session?.user?.id}`,
         {
           params: {
             expenseId: expenseId,
-            updatedExpense: updatedExpense
-          }
+            // updatedExpense: updatedExpense,
+          },
         }
       );
       const data = response.data;
@@ -63,18 +67,39 @@ const EditExpense = () => {
         amount: data.amount,
         dateDueOrPayed: data.dateDueOrPayed,
       });
-
     } catch (error) {
       console.error("Error fetching expense details:", error);
     }
   };
 
-  useEffect(() => {
-    getExpenseDetails();
-  }, []);
+  // const getExpenseDetails = async () => {
+  //   try {
+  //     console.log("user to find:", session?.user?.id);
+  //     console.log("expense to find:", expenseId);
+  //     const response = await axios.get(
+  //       `/api/getUserExpense/${session?.user?.id}`,
+  //       {
+  //         params: {
+  //           expenseId: expenseId,
+  //         }
+  //       }
+  //     );
+  //     const data = response.data;
+
+  //     console.log("expense data:", data);
+  //   } catch (error) {
+  //     console.error("Error fetching expense details:", error);
+  //   }
+  // };
 
   useEffect(() => {
-    console.log("post values:",post);
+    if(!post.expenseIdFromParams){
+      getExpenseDetails();
+    }
+  }, [session?.user?.id]);
+
+  useEffect(() => {
+    console.log("post values:", post);
   }, [post]);
 
   return (

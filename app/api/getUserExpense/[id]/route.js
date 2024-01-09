@@ -6,8 +6,6 @@ export const GET = async (req, { query, params }) => {
     const queryParams = new URLSearchParams(req.url.split("?")[1]); // Extract query parameters
     const expenseId = queryParams.get("expenseId");
 
-    console.log("expense", expenseId);
-    console.log("end here");
 
     await connectToDB();
 

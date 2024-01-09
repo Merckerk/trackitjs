@@ -10,7 +10,6 @@ const authOptions = {
       name: "credentials",
       credentials: {},
       async authorize(credentials) {
-        console.log("recieved creds", credentials);
         const { username, password } = credentials;
 
         try {
@@ -19,22 +18,16 @@ const authOptions = {
 
           //Error handling if username does not exist
           if (!user) {
-            console.log("User not found");
             return null;
           }
 
           //Check password if correct
           const validPassword = await bcryptjs.compare(password, user.password);
 
-          console.log("Password comparison result:", validPassword);
 
-          console.log(process.env.NEXTAUTH_SECRET);
           if (!validPassword) {
-            console.log("Invalid password");
             return null;
           } else {
-            console.log("Valid password");
-            console.log("user to return:", user);
             return user;
           }
         } catch (error) {
@@ -51,7 +44,6 @@ const authOptions = {
         token.email = user.email;
         token.id = user.id;
       }
-      console.log("token:", token);
       return token;
     },
     async session({ session, token }) {
@@ -60,7 +52,6 @@ const authOptions = {
         session.user.email = token.email;
         session.user.id = token.id;
       }
-      console.log("sesh:", session);
       return session;
     },
   },

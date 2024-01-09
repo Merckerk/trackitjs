@@ -23,7 +23,7 @@ const CreateExpense = () => {
 
   const handleSubmit = async () => {
     try {
-      setIsLoading(true);
+      setIsLoading(true);z
   
       const response = await axios.patch(`api/addexpense`, {
         userId: session?.user?.id,

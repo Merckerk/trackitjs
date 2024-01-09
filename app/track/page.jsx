@@ -17,11 +17,6 @@ const Track = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
-  // useEffect(() => {
-  //   if(session?.user){
-  //     loadUserExpenses();
-  //   }
-  // }, [session?.user]);
 
   useEffect(() => {
     console.log("sesh for track: ", session);
@@ -62,6 +57,10 @@ const Track = () => {
     }
   };
 
+  const handleEdit = (expenseId) => {
+    router.push(`/edit-expense?expenseid=${expenseId}`)
+  }
+
   return (
     <div className="container mx-auto mt-5 mb-8">
       <div className="max-w-2xl mx-auto flex flex-col gap-7 glassmorphism">
@@ -90,7 +89,7 @@ const Track = () => {
             </button>
           </div>
         </div>
-        <ExpenseList expenses={expensesToLoad} onDelete={handleDelete} />
+        <ExpenseList expenses={expensesToLoad} onDelete={handleDelete} onEdit={handleEdit} />
       </div>
     </div>
   );

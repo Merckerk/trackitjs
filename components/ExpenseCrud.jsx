@@ -69,11 +69,11 @@ const ExpenseCrudForm = ({
         <button className="black_btn" disabled={loading} onClick={handleSubmit}>
           {loading ? "Processing" : `${type} Expense`}
         </button>
-        {type === "Edit" ? (
+        {/* {type === "Edit" ? (
           <button className="red_btn" disabled={loading} onClick={handleDelete}>
             {loading ? "Processing" : "Delete Expense"}
           </button>
-        ) : null}
+        ) : null} */}
       </form>
     </div>
   );

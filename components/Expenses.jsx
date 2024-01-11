@@ -19,7 +19,7 @@ import {
 
 import React from "react";
 
-const ExpenseList = ({ expenses, onDelete }) => {
+const ExpenseList = ({ expenses, onDelete, onEdit }) => {
   return (
     <>
       <TableContainer component={Paper}>
@@ -45,7 +45,7 @@ const ExpenseList = ({ expenses, onDelete }) => {
                   {row.dateDueOrPayed}
                 </StyledTableCell>
                 <StyledTableCellWithButtons align="center">
-                  <button color="primary" onClick={() => {}}>
+                  <button color="primary" onClick={() => {onEdit(row._id)}}>
                     Edit
                   </button>
                   <button color="primary" onClick={() => {onDelete(row._id)}}>

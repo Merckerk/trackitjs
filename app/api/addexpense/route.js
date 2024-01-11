@@ -13,10 +13,6 @@ export const PATCH = async (req, { params }) => {
   
       if (!existingUser) return new Response("User not found", { status: 404 });
   
-      if (existingUser.userId === "owners") {
-        return new Response("Cannot edit/update this user.", { status: 500 });
-      }
-  
       // Response if user is updated successfully
       existingUser.expenses.push(expense);
   

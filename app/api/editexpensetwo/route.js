@@ -15,11 +15,19 @@ export const PATCH = async (req, { params }) => {
     const expenseToUpdate = existingUser.expenses.find(
       (expense) => expense._id.toString() === expenseId
     );
-    console.log("userid",userId);
+
+    // if (!expenseToUpdate) {
+    //   return new Response("Expense not found", { status: 404 });
+    // }
     console.log("expense To Update:", expenseToUpdate);
-    console.log("updated expense:",updatedExpense);
+
+    Object.assign(expenseToUpdate, updatedExpense);
 
     await existingUser.save();
+    console.log("userid",userId);
+    console.log("updated expense:",updatedExpense);
+
+    // await existingUser.save();
     return new Response(JSON.stringify(existingUser), { status: 200 });
   } catch (error) {
     console.error("Error during expense addition:", error);

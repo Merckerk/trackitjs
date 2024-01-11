@@ -23,9 +23,6 @@ const EditExpense = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [areFieldsValid, setAreFieldsValid] = useState(false);
 
-
-
-
   // const editExpense = async () => {
   //   try {
   //     const { name, amount, dateDueOrPayed } = post;
@@ -46,27 +43,32 @@ const EditExpense = () => {
   // };
 
   const editExpense = async () => {
-    const {name, amount, dateDueOrPayed} = post;
-    const postValues = {name, amount, dateDueOrPayed};
+    const { name, amount, dateDueOrPayed } = post;
+    const postValues = { name, amount, dateDueOrPayed };
     try {
+      setIsLoading(true);
       const response = await axios.patch(`api/editexpensetwo`, {
         userId: session?.user?.id,
         expenseId: expenseId,
         updatedExpense: postValues,
       });
 
-      console.log("response: ", response)
+      console.log("response: ", response);
       if (response.status === 200) {
-        setTimeout(() => router.push("/track"), 500);
+        setTimeout(() => {
+          
+          router.push("/track");
+        }, 1000);
       }
     } catch (error) {
-      console.error("Error saving changes:", error)
+      console.error("Error saving changes:", error);
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
 
-
-
+  
 
   const getExpenseDetails = async () => {
     try {
@@ -85,6 +87,7 @@ const EditExpense = () => {
         }
       );
       const data = response.data;
+      console.log("data:", data);
 
       setPost({
         expenseIdFromParams: expenseId,
@@ -118,8 +121,9 @@ const EditExpense = () => {
   // };
 
   useEffect(() => {
-    if(!post.expenseIdFromParams){
+    if (!post.expenseIdFromParams) {
       getExpenseDetails();
+      console.log("changed");
     }
   }, [session?.user?.id]);
 

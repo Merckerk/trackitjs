@@ -25,6 +25,16 @@ const UserCrudForm = ({
     return isValid;
   };
 
+  const validateEmail = (value) => {
+    const isValid = /\S+@\S+\.\S+/.test(value); // Basic email format validation
+    setErrMsg((prevErrMsg) => ({
+      ...prevErrMsg,
+      email: isValid ? "" : "Please enter a valid email address",
+    }));
+    return isValid;
+  };
+  
+
   const validatePassword = (value) => {
     const isLengthValid = value.length >= 12;
     const isCriteriaValid =
@@ -75,6 +85,30 @@ const UserCrudForm = ({
                 validateUsername(e.target.value);
               }}
               value={payload?.username}
+              required
+            />
+            {errMsg.username ? (
+              <p className="error_message">{errMsg.username}</p>
+            ) : null}
+          </label>
+        </div>
+        
+        <div className="form-group">
+          <label>
+            <span className="font-satoshi font-semibold text-base text-gray-700">
+              Email
+            </span>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter email"
+              className="form_input"
+              onChange={(e) => {
+                setPayload({ ...payload, email: e.target.value });
+                validateEmail(e.target.value);
+              }}
+              value={payload?.email}
               required
             />
             {errMsg.username ? (

@@ -26,7 +26,9 @@ const ExpenseCrudForm = ({
           name="name"
           placeholder="Enter Expense Name"
           className="form_input"
-          onChange={() => {}}
+          onChange={(e) => {
+            setPost({ ...post, name: e.target.value });
+          }}
           value={post?.name}
           required
         />
@@ -40,7 +42,9 @@ const ExpenseCrudForm = ({
           name="amount"
           placeholder="Enter expense amount"
           className="form_input"
-          onChange={() => {}}
+          onChange={(e) => {
+            setPost({ ...post, amount: e.target.value });
+          }}
           value={post?.amount}
           required
         />
@@ -49,13 +53,15 @@ const ExpenseCrudForm = ({
 
         <ReusableInput
           label="Date Due or paid"
-          type="Date"
+          type="date"
           id="dateDueOrPaid"
           name="dateDueOrPaid"
           placeholder="Enter Date"
           className="form_input"
-          onChange={() => {}}
-          value=""
+          onChange={(e) => {
+            setPost({ ...post, dateDueOrPayed: e.target.value });
+          }}
+          value={post?.date}
           errorMessage=""
           required
         />
@@ -63,11 +69,11 @@ const ExpenseCrudForm = ({
         <button className="black_btn" disabled={loading} onClick={handleSubmit}>
           {loading ? "Processing" : `${type} Expense`}
         </button>
-        {type === "Edit" ? (
+        {/* {type === "Edit" ? (
           <button className="red_btn" disabled={loading} onClick={handleDelete}>
             {loading ? "Processing" : "Delete Expense"}
           </button>
-        ) : null}
+        ) : null} */}
       </form>
     </div>
   );

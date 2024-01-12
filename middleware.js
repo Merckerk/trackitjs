@@ -7,3 +7,5 @@ export const config = {
     "/edit-expense/:path",
   ],
 };
+
+//protect pages

@@ -18,7 +18,7 @@ const Home = () => {
 
       <p className="desc text-center">
         TrackIt is an app for the modern world to plan, visualize, and innovate
-        financial habbits.
+        financial habits.
       </p>
 
       <div className="flex-center mt-10 space-x-4">

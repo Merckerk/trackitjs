@@ -5,6 +5,9 @@ import bcryptjs from "bcryptjs";
 //add expense to user
 export const PATCH = async (req, { params }) => {
   const { userId, expenseId, updatedExpense } = await req.json();
+  console.log("user id:", userId);
+  console.log("expense:", expenseId);
+  console.log("user updated:", updatedExpense);
   try {
     await connectToDB();
     // Find and update the user with the new data

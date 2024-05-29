@@ -44,7 +44,7 @@ const EditExpense = () => {
   // };
 
   const editExpense = async () => {
-    const { name, amount, dateDueOrPayed } = post;
+    const { name, amount, dateDueOrPayed, isPaid } = post;
     const postValues = { name, amount, dateDueOrPayed, isPaid };
     try {
       setIsLoading(true);

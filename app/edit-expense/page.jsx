@@ -45,7 +45,7 @@ const EditExpense = () => {
 
   const editExpense = async () => {
     const { name, amount, dateDueOrPayed } = post;
-    const postValues = { name, amount, dateDueOrPayed };
+    const postValues = { name, amount, dateDueOrPayed, isPaid };
     try {
       setIsLoading(true);
       const response = await axios.patch(`api/editexpensetwo`, {

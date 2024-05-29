@@ -4,6 +4,14 @@ const expenseSchema = new Schema({
   name: String,
   amount: Number,
   dateDueOrPayed: String,
+  isPaid: {
+    type: Boolean,
+    default: false,
+  },
+  isArchived: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const userSchema = new Schema({

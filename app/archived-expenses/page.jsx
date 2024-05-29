@@ -9,7 +9,7 @@ import { signOut, useSession } from "next-auth/react";
 
 import axios from "axios";
 
-const Track = () => {
+const ArchivedExpenses = () => {
   const { data: session } = useSession();
   const [allExpenses, setAllExpenses] = useState([]);
   const [loggedInUsername, setLoggedInUsername] = useState(null);
@@ -26,7 +26,7 @@ const Track = () => {
   const loadUserExpenses = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch(`/api/user/${session?.user?.id}`);
+      const res = await fetch(`/api/user/${session?.user?.id}/archives`);
       const data = await res.json();
 
       console.log(data);
@@ -43,10 +43,8 @@ const Track = () => {
     try {
       setIsLoading(true);
 
-      const response = await axios.patch(`api/archiveexpense`, {
-        userId: session?.user?.id,
+      const response = await axios.patch(`api/deleteUserExpense/${session?.user?.id}`, {
         expenseId: expenseId,
-        isToArchive: true,
       })
       
       console.log("response: ", response.data);
@@ -59,8 +57,24 @@ const Track = () => {
     }
   };
 
-  const handleEdit = (expenseId) => {
-    router.push(`/edit-expense?expenseid=${expenseId}`)
+  const handleRestore = async (expenseId) => {
+    try {
+        setIsLoading(true);
+  
+        const response = await axios.patch(`api/archiveexpense`, {
+          userId: session?.user?.id,
+          expenseId: expenseId,
+          isToArchive: false,
+        })
+        
+        console.log("response: ", response.data);
+        loadUserExpenses();
+        
+      } catch (error) {
+        console.log(error);
+      }finally{
+        setIsLoading(false);
+      }
   }
 
   return (
@@ -83,11 +97,11 @@ const Track = () => {
             <button
               color="primary"
               onClick={() => {
-                router.push("/archived-expenses");
+                router.push("/track");
               }}
               className="black_btn"
             >
-              Archived Expenses
+              Expenses
             </button>
             <button
               color="primary"
@@ -100,10 +114,10 @@ const Track = () => {
             </button>
           </div>
         </div>
-        <ExpenseList expenses={expensesToLoad} onArchive={handleDelete} onEdit={handleEdit} archives={false}/>
+        <ExpenseList expenses={expensesToLoad} onPermaDelete={handleDelete} onRestore={handleRestore} archives={true}/>
       </div>
     </div>
   );
 };
 
-export default Track;
+export default ArchivedExpenses;

@@ -9,7 +9,11 @@ export const GET = async (req, { params }) => {
         const user = await User.findById(params.id);
         if (!user) return new Response("User Not Found.", { status: 404 });
 
-        return new Response(JSON.stringify(user.expenses), { status: 200});
+        const filteredExpenses = user.expenses.filter((expense) => {
+            return expense.isArchived == false;
+        }) 
+
+        return new Response(JSON.stringify(filteredExpenses), { status: 200});
         
     } catch (error) {
         console.log(error);

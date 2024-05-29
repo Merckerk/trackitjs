@@ -18,6 +18,7 @@ const EditExpense = () => {
     name: "",
     amount: 0,
     dateDueOrPayed: "",
+    isPaid: false,
   });
 
   const [isLoading, setIsLoading] = useState(false);

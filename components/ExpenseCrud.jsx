@@ -17,8 +17,6 @@ const ExpenseCrudForm = ({
           {type} Expense
         </h1>
 
-        {/* Reusable input for name */}
-
         <ReusableInput
           label="Name"
           type="text"
@@ -32,8 +30,6 @@ const ExpenseCrudForm = ({
           value={post?.name}
           required
         />
-
-        {/* Reusable input for amount */}
 
         <ReusableInput
           label="Amount"
@@ -49,10 +45,8 @@ const ExpenseCrudForm = ({
           required
         />
 
-        {/* Reusable input for date */}
-
         <ReusableInput
-          label="Date Due or paid"
+          label="Date Due"
           type="date"
           id="dateDueOrPaid"
           name="dateDueOrPaid"
@@ -65,6 +59,24 @@ const ExpenseCrudForm = ({
           errorMessage=""
           required
         />
+
+        <div className="form-group">
+          <label>
+            <span className="font-satoshi font-semibold text-base text-gray-700 mr-7">
+              Paid
+            </span>
+            <input
+              type="checkbox"
+              id="isPaid"
+              name="isPaid"
+              className="form_checkbox"
+              onChange={(e) => {
+                setPost({ ...post, isPaid: e.target.checked });
+              }}
+              checked={post?.isPaid}
+            />
+          </label>
+        </div>
 
         <button className="black_btn" disabled={loading} onClick={handleSubmit}>
           {loading ? "Processing" : `${type} Expense`}

@@ -19,7 +19,14 @@ import {
 
 import React from "react";
 
-const ExpenseList = ({ expenses, onDelete, onEdit }) => {
+const ExpenseList = ({
+  expenses,
+  onArchive,
+  onEdit,
+  archives,
+  onPermaDelete,
+  onRestore,
+}) => {
   return (
     <>
       <TableContainer component={Paper}>
@@ -28,13 +35,14 @@ const ExpenseList = ({ expenses, onDelete, onEdit }) => {
             <TableRow>
               <StyledTableCell>Name</StyledTableCell>
               <StyledTableCell align="right">Amount</StyledTableCell>
-              <StyledTableCell align="right">Date Due or Paid</StyledTableCell>
+              <StyledTableCell align="right">Date Due</StyledTableCell>
+              <StyledTableCell align="right">Status</StyledTableCell>
               <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {expenses.map((row) => (
-              <StyledTableRow key={row.name}>
+              <StyledTableRow key={row._id}>
                 <StyledTableCell component="th" scope="row">
                   {row.name}
                 </StyledTableCell>
@@ -44,13 +52,51 @@ const ExpenseList = ({ expenses, onDelete, onEdit }) => {
                 <StyledTableCell style={{ width: 160 }} align="right">
                   {row.dateDueOrPayed}
                 </StyledTableCell>
+                <StyledTableCell style={{ width: 160 }} align="right">
+                  {row.isPaid ? "PAID" : "NOT PAID"}
+                </StyledTableCell>
                 <StyledTableCellWithButtons align="center">
-                  <button color="primary" onClick={() => {onEdit(row._id)}}>
-                    Edit
-                  </button>
-                  <button color="primary" onClick={() => {onDelete(row._id)}}>
-                    Delete
-                  </button>
+                  {archives ? (
+                    <>
+                      <button
+                        color="primary"
+                        style={{ marginRight: "30px" }}
+                        onClick={() => {
+                          onRestore(row._id);
+                        }}
+                      >
+                        Restore
+                      </button>
+                      <button
+                        color="primary"
+                        onClick={() => {
+                          onPermaDelete(row._id);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        color="primary"
+                        style={{ marginRight: "30px" }}
+                        onClick={() => {
+                          onEdit(row._id);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        color="primary"
+                        onClick={() => {
+                          onArchive(row._id);
+                        }}
+                      >
+                        Archive
+                      </button>
+                    </>
+                  )}
                 </StyledTableCellWithButtons>
               </StyledTableRow>
             ))}
@@ -59,6 +105,13 @@ const ExpenseList = ({ expenses, onDelete, onEdit }) => {
       </TableContainer>
     </>
   );
+};
+
+ExpenseList.defaultProps = {
+  onPermaDelete: () => {},
+  onEdit: () => {},
+  onArchive: () => {},
+  onRestore: () => {},
 };
 
 export default ExpenseList;

@@ -14,6 +14,7 @@ const CreateExpense = () => {
     name: "",
     amount: 0,
     dateDueOrPayed: "",
+    isPaid: false
     // date: new Date().toISOString(),
   });
 

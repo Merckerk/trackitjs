@@ -95,6 +95,7 @@ const EditExpense = () => {
         name: data.name,
         amount: data.amount,
         dateDueOrPayed: data.dateDueOrPayed,
+        isPaid: data.isPaid
       });
     } catch (error) {
       console.error("Error fetching expense details:", error);
@@ -130,6 +131,7 @@ const EditExpense = () => {
 
   useEffect(() => {
     console.log("post values:", post);
+    console.log("type date", typeof post.dateDueOrPayed)
   }, [post]);
 
   return (

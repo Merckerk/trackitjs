@@ -57,7 +57,7 @@ const ExpenseCrudForm = ({
           }}
           value={post?.date}
           errorMessage=""
-          required
+          
         />
 
         <div className="form-group">
